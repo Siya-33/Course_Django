@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% block title %}
+<h1 class="mt-4">课程列表</h1>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item active">   </li>
+</ol>
+{% endblock %}
+{% block main_body %}
+
+<script type="text/javascript">
+    function submitCreate() {
+        document.getElementById('class_form').submit();
+    }
+
+    function createLine(obj) {
+        var tr=obj.parentNode.parentNode;
+		tr.parentNode.removeChild(tr);
+		str = '<td><input type="text" name="cno_i" value="{{cno_i}}"></td><td><input type="text" name="cname_i" value="{{cname_i}}"></td><td><input type="text" name="ccredit_i" value="{{ccredit_i}}"></td><td><input type="text" name="cteacher_i" value="{{cteacher_i}}"></td><td><input type="text" name="cdeptno_i" value="{{cdeptno_i}}"></td>\
+		        <td><a class="btn btn-dark" onclick="submitCreate()">添加</a></td></tr>'
+        document.getElementById('newClassBody').innerHTML += str;
+    }
+
+</script>
+
+
+
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="fas fa-table me-1"></i>
+        DataTable Example
+    </div>
+    <div class="card-body">
+        <form id="class_form" action="{% url 'add' %}" method="POST">
+        {% csrf_token %}
+        <table id="datatablesSimple">
+            <thead>
+                <tr>
+                    <th>课程编号</th>
+                    <th>课程名</th>
+                    <th>学分</th>
+                    <th>教师</th>
+                    <th>所属专业</th>
+                    <th>提交</th>
+
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th>课程编号</th>
+                    <th>课程名</th>
+                    <th>学分</th>
+                    <th>教师</th>
+                    <th>所属专业</th>
+                    <th>提交</th>
+
+                </tr>
+            </tfoot>
+            <tbody id="newClassBody">
+            {% for course in course_list %}
+                <tr>
+                    <td>{{course.cno}}</td>
+                    <td>{{course.cname}}</td>
+                    <td>{{course.ccredit}}</td>
+                    <td>{{course.cteacher}}</td>
+                    <td>{{course.cdeptno}}</td>
+                    <td><a class="btn btn-dark" href="{% url 'delete' course.cno %}">删除</a></td>
+                </tr>
+            {% endfor %}
+                <tr>
+                    <td><input type="button" style="background:transparent; border:none;width=100%"
+                               onclick="createLine(this)" value="+ new"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+
+        </form>
+    </div>
+</div>
+{% endblock %}

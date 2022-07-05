@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block title %}
+<h1 class="mt-4">选课列表</h1>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item active">可选课程</li>
+</ol>
+{% endblock %}
+{% block main_body %}
+
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="fas fa-table me-1"></i>
+        DataTable Example
+    </div>
+    <div class="card-body">
+        <table id="datatablesSimple">
+            <thead>
+                <tr>
+                    <th>课程编号</th>
+                    <th>课程名</th>
+                    <th>学分</th>
+                    <th>教师</th>
+                    <th>所属专业</th>
+                    <th>提交选课</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th>课程编号</th>
+                    <th>课程名</th>
+                    <th>学分</th>
+                    <th>教师</th>
+                    <th>所属专业</th>
+                    <th>提交选课</th>
+                </tr>
+            </tfoot>
+            <tbody>
+            {% for course in course_list %}
+                <tr>
+                    <td>{{course.cno}}</td>
+                    <td>{{course.cname}}</td>
+                    <td>{{course.ccredit}}</td>
+                    <td>{{course.cteacher}}</td>
+                    <td>{{course.cdeptno}}</td>
+                    <td><a  href="{% url 'choose' course.cno %}" class="btn btn-dark">submit </a> </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
